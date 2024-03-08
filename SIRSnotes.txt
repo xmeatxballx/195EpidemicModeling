@@ -1,0 +1,13 @@
+Uros BBojanic
+
+dS(t)/dt = -β * S * I + ξ * R
+dI(t)/dt =  β * S * I - γ * I
+dR(t)/dt =  γ * I - ξ * R
+
+dS(t)/dt = -β * S * I / N + ξ * R                  % N = S + I + R
+dI(t)/dt =  β * S * I / N - γ * I                  β is the transmission rate , which measures the rate at which an infected individual infects susceptible individuals.
+dR(t)/dt =  γ * I - ξ * R                          γ is the recovery rate, which is the rate at which infected individuals recover and gain immunity to the infection.
+dN(t)/dt = -δ * I  
+                                                   ξ is the rate at which recovered individuals lose their immunity and become susceptible again.
+
+
