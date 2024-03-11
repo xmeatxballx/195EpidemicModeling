@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import LSTM, Dense
+from keras.models import Sequential
+from keras.layers import LSTM, Dense
 
 def load_and_preprocess_data(file_path):
     # Load the spreadsheet
@@ -42,9 +42,19 @@ testing_files =  ['C:\\Users\\mtpv1\\Downloads\\Set 21_Processed.xlsx', 'C:\\Use
 X_train, y_train = [], []
 X_test, y_test = [], []
 
+# Initialize the model once, outside the loop
+# Assuming all files have the same feature shape, we can set a fixed input shape
+model = create_model(input_shape=(118, 4))  # Adjust the shape based on your features
+
 # Load and preprocess training data
 for file in training_files:
     features, target = load_and_preprocess_data(file)
-    X_train.append(features)
-    y_train.append(target)
+    # Train the model on the current file's data
+    model.fit(features, target, epochs=10, batch_size=5)  # Adjust epochs & batch_size as needed
 
+# Loop through each testing file to evaluate the model
+for file in testing_files:
+    features, target = load_and_preprocess_data(file)
+    # Evaluate the model on the current file's data
+    loss = model.evaluate(features, target)
+    print(f"Evaluation on {file.split('\\')[-1]}: Loss = {loss}")
